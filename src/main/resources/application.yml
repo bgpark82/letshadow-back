@@ -7,7 +7,10 @@ spring.datasource.username: sa
 spring.datasource.password:
 spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
+logging.level.root: info
+logging.level.com.bgpark.letshadow: debug
 logging.level.org.hibernate.SQL: debug            # 로그 형식으로 쿼리 보여주기
 spring.jpa.properties.hibernate.format_sql: true  # 압축된 쿼리를 읽기 좋게 포멧
 spring.jpa.hibernate.ddl-auto: update             # 서버 시작에 테이블 생성
 
+logging.level.reactor.netty.http.client.HttpClient: DEBUG

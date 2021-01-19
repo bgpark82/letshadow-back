@@ -13,9 +13,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+            .csrf().disable()
+            .headers().frameOptions().disable()
+                .and()
+            .cors()
+                .and()
+            .authorizeRequests()
+            .antMatchers("/oauth/**", "/h2-console/**").permitAll()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-            .antMatchers(HttpMethod.GET).access("#oauth2.hasAnyScope('read')")
-            .and().cors();
+            .antMatchers(HttpMethod.GET).access("#oauth2.hasAnyScope('read')");
+
     }
 }

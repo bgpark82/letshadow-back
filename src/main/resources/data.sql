@@ -2,4 +2,4 @@ insert into oauth_client_details(client_id, resource_ids,client_secret,scope,aut
 values('test',null,'{noop}test','read,write','password,refresh_token',null,'ROLE_USER',36000,50000,null,null);
 
 insert into user(id, email, password, role)
-values(null,'pop8682@gmail.com','{bcrypt}$2a$10$476wqdnMSj0Rb5RgxXLLIOhzzPm2iT4HGmM7qE6JR9rxseyUgy.yK','ROLE_USER');
+values(null,'popo8682@gmail.com',null,'ROLE_USER');
