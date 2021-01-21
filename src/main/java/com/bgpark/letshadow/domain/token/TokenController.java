@@ -14,7 +14,6 @@ import reactor.netty.http.client.HttpClient;
 @RequiredArgsConstructor
 public class TokenController {
 
-    private final WebClient webClient;
     private final GoogleTokenRepository googleTokenRepository;
 
     private static final String GOOGLE_CALLBACK_URI = "https://oauth2.googleapis.com";
@@ -65,6 +64,7 @@ public class TokenController {
                     .email(email.getEmail())
                     .access_token(googleToken.getAccess_token())
                     .refresh_token(googleToken.getRefresh_token())
+                    .expires_in(googleToken.getExpires_in())
                     .build());
         }
 
