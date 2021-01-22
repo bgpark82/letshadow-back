@@ -1,16 +1,9 @@
 package com.bgpark.letshadow.config;
 
-import com.bgpark.letshadow.domain.token.GoogleTokenRepository;
 import com.bgpark.letshadow.domain.token.TokenDto;
 import com.bgpark.letshadow.domain.user.User;
 import com.bgpark.letshadow.domain.user.UserRepository;
-import com.bgpark.letshadow.exception.ApiException;
 import com.bgpark.letshadow.exception.CustomAuthException;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.ObjectMapper;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
