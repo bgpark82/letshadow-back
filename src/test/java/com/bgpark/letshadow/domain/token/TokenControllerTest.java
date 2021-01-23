@@ -22,29 +22,28 @@ class TokenControllerTest {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Disabled
-    @Test
-    void callback() {
-        webTestClient.get()
-                .uri("http://localhost:8080/oauth/callback?state=pass-through+value&code=4%2F0AY0e-g5_AtUq8ImI2SaZDawsTLfKDaOOYTlzDtDnh93Fl2ygywb6zNQeO402WeNq-WcqTg&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube&authuser=0&prompt=consent#")
-                .exchange()
-                .expectStatus().isOk();
-
-    }
-
-    @Disabled
-    @Test
-    void getGoogleToken() {
-        webTestClient.post().uri(uriBuilder ->
-            uriBuilder.host(GOOGLE_CALLBACK_URI)
-                    .queryParam("code",CODE)
-                    .queryParam("client_id",CLIENT_ID)
-                    .queryParam("client_secret",CLIENT_SECRET)
-                    .queryParam("grant_type",GRANT_TYPE)
-                    .queryParam("redirect_uri",REDIRECT_URI).build())
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .exchange()
-                .expectStatus().isOk();
-
-    }
+//    @Disabled
+//    @Test
+//    void callback() {
+//        webTestClient.get()
+//                .uri("http://localhost:8080/oauth/callback?state=pass-through+value&code=4%2F0AY0e-g5_AtUq8ImI2SaZDawsTLfKDaOOYTlzDtDnh93Fl2ygywb6zNQeO402WeNq-WcqTg&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube&authuser=0&prompt=consent#")
+//                .exchange()
+//                .expectStatus().isOk();
+//
+//    }
+//
+//    @Disabled
+//    @Test
+//    void getGoogleToken() {
+//        webTestClient.post().uri(uriBuilder ->
+//            uriBuilder.host(GOOGLE_CALLBACK_URI)
+//                    .queryParam("code",CODE)
+//                    .queryParam("client_id",CLIENT_ID)
+//                    .queryParam("client_secret",CLIENT_SECRET)
+//                    .queryParam("grant_type",GRANT_TYPE)
+//                    .queryParam("redirect_uri",REDIRECT_URI).build())
+//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+//                .exchange()
+//                .expectStatus().isOk();
+//    }
 }
