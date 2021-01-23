@@ -1,15 +1,20 @@
 package com.bgpark.letshadow.domain.token;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
+import java.util.Optional;
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class TokenController {
@@ -24,10 +29,11 @@ public class TokenController {
 
 //    http://localhost:5500/?state=pass-through+value&code=4%2F0AY0e-g7Zwc1Lyc9nmDeAp0p3oKRHjqHepI6rRU7XY0W-mMrXOaAI6-52hLGv6XkJTbxOGA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube&authuser=0&prompt=consent#
 
+    @Transactional
     @GetMapping("/oauth/callback")
     public String callback(@RequestParam(name = "code", required = false) String code) {
 //        if(code == null) return "redirect:http://localhost:5500";
-        System.out.println(code);
+        log.info("code : {}", code);
 
         TokenDto.Res googleToken = WebClient.builder()
                 .baseUrl(GOOGLE_CALLBACK_URI)
@@ -44,6 +50,7 @@ public class TokenController {
                         .queryParam("redirect_uri", REDIRECT_URI).build())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(TokenDto.Res.class)).block();
+        log.debug("google token : {}",googleToken);
 
         // token 확인 -> email
         TokenDto.Profile email = WebClient.builder()
@@ -56,10 +63,13 @@ public class TokenController {
                 .build())
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(TokenDto.Profile.class))
                 .block();
+        log.info("email : {}",email);
 
-        System.out.println(email);
+        Optional<GoogleToken> optional = googleTokenRepository.findByEmail(email.getEmail());
+        if(optional.isPresent()) {
+            optional.get().setAccess_token(googleToken.getAccess_token());
 
-        if(!googleTokenRepository.findByEmail(email.getEmail()).isPresent()) {
+        } else {
             googleTokenRepository.save(GoogleToken.builder()
                     .email(email.getEmail())
                     .access_token(googleToken.getAccess_token())
@@ -83,7 +93,7 @@ public class TokenController {
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(TokenDto.ServerToken.class))
                 .block();
 
-        System.out.println(serverToken);
+        log.info("server token : {}",serverToken);
 
          return "redirect:http://localhost:5500?access_token=" + serverToken.getAccess_token() + "&refresh_token=" + serverToken.getRefresh_token() + "&expires_in=" +serverToken.getExpires_in() ;
 

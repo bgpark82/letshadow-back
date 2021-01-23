@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class ExceptionController {
 
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ApiException> handleApiException(ApiException e, HttpServletRequest request) {
         log.error("ApiException : {}", e);

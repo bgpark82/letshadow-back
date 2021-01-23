@@ -1,5 +1,6 @@
 package com.bgpark.letshadow.domain.youtube;
 
+
 import com.bgpark.letshadow.domain.token.GoogleToken;
 import com.bgpark.letshadow.domain.token.GoogleTokenRepository;
 import com.bgpark.letshadow.exception.ApiException;
@@ -29,8 +30,6 @@ public class Videos {
         GoogleToken token = googleTokenRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException("토큰이 존재하지 않습니다") );
         log.info("google token : {}", token.getAccess_token());
-
-
 
         try {
             String block = WebClient.create().get()

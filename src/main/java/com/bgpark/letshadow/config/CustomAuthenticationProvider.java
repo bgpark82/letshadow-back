@@ -3,8 +3,10 @@ package com.bgpark.letshadow.config;
 import com.bgpark.letshadow.domain.token.TokenDto;
 import com.bgpark.letshadow.domain.user.User;
 import com.bgpark.letshadow.domain.user.UserRepository;
+import com.bgpark.letshadow.exception.ApiException;
 import com.bgpark.letshadow.exception.CustomAuthException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -29,16 +32,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             User user = userRepository.findByEmail(email);
 
             try {
-                ResponseEntity<TokenDto.Check> response = restTemplate.postForEntity(GOOGLE_PROVIDER_ENDPOINT + password, null, TokenDto.Check.class);
+                restTemplate.postForEntity(GOOGLE_PROVIDER_ENDPOINT + password, null, TokenDto.Check.class);
             } catch (RuntimeException e) {
-                throw new CustomAuthException("1001","Invalid Google Token");
+                throw new ApiException("Invalid Google Token");
             }
 
-            // 비밀번호 확인
-            System.out.println(email);
-            System.out.println(password);
-            System.out.println(user);
-            System.out.println(user.getAuthorities());
+            log.debug("email : {}",email);
+            log.debug("password : {}",password);
+            log.debug("user : {}",user);
+            log.debug("authorities : {}",user.getAuthorities());
             user.setPassword(password);
        return new JwtAuthenticationToken(user, password, user, user.getAuthorities());
     }
