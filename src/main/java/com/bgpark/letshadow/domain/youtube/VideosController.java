@@ -18,7 +18,7 @@ import java.security.Principal;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class Videos {
+public class VideosController {
 
     private final GoogleTokenRepository googleTokenRepository;
 

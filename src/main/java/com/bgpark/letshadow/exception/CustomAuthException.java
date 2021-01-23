@@ -3,7 +3,6 @@ package com.bgpark.letshadow.exception;
 import org.springframework.security.oauth2.common.exceptions.ClientAuthenticationException;
 
 /**
- *
  * https://stackoverflow.com/questions/31660707/spring-oauth2-custom-exception-handler
  */
 public class CustomAuthException extends ClientAuthenticationException {
