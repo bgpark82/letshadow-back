@@ -1,5 +1,6 @@
 package com.bgpark.letshadow.domain.token;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -21,6 +22,7 @@ class TokenControllerTest {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Disabled
     @Test
     void callback() {
         webTestClient.get()
@@ -30,6 +32,7 @@ class TokenControllerTest {
 
     }
 
+    @Disabled
     @Test
     void getGoogleToken() {
         webTestClient.post().uri(uriBuilder ->

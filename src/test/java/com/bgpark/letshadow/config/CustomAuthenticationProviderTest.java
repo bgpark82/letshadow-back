@@ -25,6 +25,7 @@ class CustomAuthenticationProviderTest {
         assertThat(checkToken.getBody().getEmail()).isEqualTo("bgpark82@gmail.com");
     }
 
+    @Disabled
     @Test
     void checkGoogleInvalidToken() {
         String uri = "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=invalid_token";
