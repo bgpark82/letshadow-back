@@ -12,7 +12,7 @@ public class ServerTokenApi {
     public TokenDto.ServerToken getToken(String email, String accessToken) {
 
         return WebClient.builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl("https://letshadow.me")
                 .clientConnector(new ReactorClientHttpConnector(
                         HttpClient.create().wiretap(true)
                 )).build()
