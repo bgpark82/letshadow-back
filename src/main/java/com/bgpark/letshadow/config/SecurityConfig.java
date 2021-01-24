@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration conf = new CorsConfiguration();
-        conf.setAllowedOrigins(Arrays.asList("http://localhost:5500","https://letshadow.netlify.app/"));
+        conf.setAllowedOrigins(Arrays.asList("https://letshadow.netlify.app","http://localhost:5500"));
         conf.setAllowedMethods(Arrays.asList("*"));
         conf.setAllowedHeaders(Arrays.asList("*"));
         conf.setAllowCredentials(true);
