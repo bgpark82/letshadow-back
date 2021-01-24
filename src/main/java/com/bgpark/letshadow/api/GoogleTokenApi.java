@@ -12,11 +12,13 @@ public class GoogleTokenApi {
 
     private static final String GOOGLE_CALLBACK_URI = "https://oauth2.googleapis.com";
     private static final String GOOGLE_TOKEN_INFO_URI = "https://www.googleapis.com/oauth2/v1/tokeninfo";
+    private static final String SERVER_REDIRECT_BASE_URI = "https://letshadow.me";
+//    private static final String SERVER_REDIRECT_BASE_URI = "http://localhost:8080";
 
     private static final String CLIENT_ID = "758204078687-dhoc57phmqfj5epv6vvi327kguumm9p8.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "vRDY1-vBeRsXstnZlrYqrgGF";
     private static final String GRANT_TYPE = "authorization_code";
-    private static final String REDIRECT_URI = "http://localhost:8080/oauth/callback";
+    private static final String REDIRECT_URI = SERVER_REDIRECT_BASE_URI + "/oauth/callback";
 
     public TokenDto.Res getToken(String code) {
 
