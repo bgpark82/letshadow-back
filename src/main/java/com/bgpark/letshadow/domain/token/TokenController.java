@@ -18,7 +18,8 @@ public class TokenController {
     private final GoogleTokenApi googleTokenApi;
     private final ServerTokenApi serverTokenApi;
 
-    private static final String REDIRECT_URL = "http://localhost:5500";
+//    private static final String REDIRECT_URL = "http://localhost:5500";
+    private static final String REDIRECT_URL = "https://letshadow.netlify.app";
 
     @Transactional
     @GetMapping("/oauth/callback")
