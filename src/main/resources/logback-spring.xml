@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d %highlight(%-5level) --- %green([%thread])   %magenta([%method]) - %boldWhite(%msg) %n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>/var/log/was/info.log</file>
+        <encoder>
+            <Pattern>%d %highlight(%-5level) --- %green([%thread])   %magenta([%method]) - %boldWhite(%msg) %n</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- spring extension -->
+    <root level="INFO">
+        <springProfile name="default">
+            <appender-ref ref="CONSOLE" />
+        </springProfile>
+        <springProfile name="prod">
+            <appender-ref ref="FILE" />
+        </springProfile>
+    </root>
+</configuration>
