@@ -1,6 +1,7 @@
 package com.bgpark.letshadow.api;
 
 import com.bgpark.letshadow.domain.token.TokenDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,6 +9,9 @@ import reactor.netty.http.client.HttpClient;
 
 @Component
 public class ServerTokenApi {
+
+    @Value("${server.baseUri}")
+    private String baseUri;
 
     public TokenDto.ServerToken getToken(String email, String accessToken) {
 
