@@ -7,7 +7,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>/var/log/admin/info.log</file>
+        <file>/var/log/was/info.log</file>
         <encoder>
             <Pattern>%d (%-5level) --- ([%thread]) ([%method]) - (%msg) %n</Pattern>
         </encoder>
