@@ -10,7 +10,7 @@
         <file>/var/log/was/info.log</file>
         <encoder>
             <charset>UTF-8</charset>
-            <Pattern>%d (%-5level) --- ([%thread]) ([%method]) - %msg %n</Pattern>
+            <Pattern>%d %-5level --- [%thread] [%method] - %msg %n</Pattern>
         </encoder>
     </appender>
 
