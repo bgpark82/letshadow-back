@@ -5,6 +5,7 @@ import com.bgpark.letshadow.domain.user.User;
 import com.bgpark.letshadow.domain.user.UserRepository;
 import com.bgpark.letshadow.exception.ApiException;
 import com.bgpark.letshadow.exception.CustomAuthException;
+import com.bgpark.letshadow.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             try {
                 restTemplate.postForEntity(GOOGLE_PROVIDER_ENDPOINT + password, null, TokenDto.Check.class);
             } catch (RuntimeException e) {
-                throw new ApiException("Invalid Google Token");
+                throw new ApiException(ErrorCode.GOOGLE_TOKEN_INFO_INVALID_REQUEST);
             }
 
             log.debug("email : {}",email);

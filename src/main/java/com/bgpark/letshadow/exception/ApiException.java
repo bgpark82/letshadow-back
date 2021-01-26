@@ -1,18 +1,14 @@
 package com.bgpark.letshadow.exception;
 
-import org.springframework.http.HttpStatus;
+import lombok.Getter;
 
+@Getter
 public class ApiException extends RuntimeException {
 
-    private int code;
+    private ErrorCode errorCode;
 
-    public ApiException(String message, int code) {
-        super(message);
-        this.code = code;
-    }
-
-    public ApiException(String message) {
-        super(message);
-        this.code = HttpStatus.BAD_REQUEST.value();
+    public ApiException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
     }
 }

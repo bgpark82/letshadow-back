@@ -1,7 +1,6 @@
 package com.bgpark.letshadow.domain.token;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 public class TokenDto {
 
@@ -26,6 +25,13 @@ public class TokenDto {
         private String token_type;
         private String id_token;
         private String refresh_token;
+    }
+
+    @Getter
+    @Setter
+    public static class Refresh {
+        private String access_token;
+        private int expires_in;
     }
 
     @Data

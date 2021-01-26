@@ -21,7 +21,8 @@ public class GoogleTokenApi {
 
     private static final String CLIENT_ID = "758204078687-dhoc57phmqfj5epv6vvi327kguumm9p8.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "vRDY1-vBeRsXstnZlrYqrgGF";
-    private static final String GRANT_TYPE = "authorization_code";
+    private static final String GRANT_TYPE_AUTHORIZATION = "authorization_code";
+    private static final String GRANT_TYPE_REFRESH = "refresh_token";
 
     public TokenDto.Res getToken(String code) {
 
@@ -38,7 +39,7 @@ public class GoogleTokenApi {
                         .queryParam("code", code)
                         .queryParam("client_id", CLIENT_ID)
                         .queryParam("client_secret", CLIENT_SECRET)
-                        .queryParam("grant_type", GRANT_TYPE)
+                        .queryParam("grant_type", GRANT_TYPE_AUTHORIZATION)
                         .queryParam("redirect_uri", serverRedirectUri).build())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(TokenDto.Res.class)).block();
@@ -55,6 +56,26 @@ public class GoogleTokenApi {
                         .queryParam("access_token", accessToken)
                         .build())
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(TokenDto.Profile.class))
+                .block();
+    }
+
+    public TokenDto.Refresh refreshToken(String refreshToken) {
+
+        return WebClient.builder()
+                .baseUrl(GOOGLE_CALLBACK_URI)
+                .clientConnector(new ReactorClientHttpConnector(
+                        HttpClient.create().wiretap(true)
+                ))
+                .build()
+                .post().uri(uriBuilder -> uriBuilder
+                        .path("/token")
+                        .queryParam("refresh_token", refreshToken)
+                        .queryParam("client_id", CLIENT_ID)
+                        .queryParam("client_secret", CLIENT_SECRET)
+                        .queryParam("grant_type", GRANT_TYPE_REFRESH)
+                        .build())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(TokenDto.Refresh.class))
                 .block();
     }
 }

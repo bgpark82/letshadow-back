@@ -7,9 +7,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>/var/log/was/info.log</file>
+        <file>/var/log/admin/info.log</file>
         <encoder>
-            <Pattern>%d %highlight(%-5level) --- %green([%thread])   %magenta([%method]) - %boldWhite(%msg) %n</Pattern>
+            <Pattern>%d (%-5level) --- ([%thread]) ([%method]) - (%msg) %n</Pattern>
         </encoder>
     </appender>
 
