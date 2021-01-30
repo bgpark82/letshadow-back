@@ -21,7 +21,7 @@ public class TokenService {
 
     @Transactional
     public String getValidToken(String email) {
-        log.info("check user email : {}", email);
+        log.debug("check user email : {}", email);
 
         GoogleToken token = googleTokenRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(ErrorCode.GOOGLE_TOKEN_NOT_FOUND) );
@@ -31,7 +31,8 @@ public class TokenService {
             token.refreshToken(refresh.getAccess_token(), refresh.getExpires_in());
         }
 
-        log.info("google token : {}", token.getAccess_token());
+        log.debug("google token expired : {}", token.isTokenExpired() );
+        log.debug("google token : {}", token.getAccess_token());
 
         return token.getAccess_token();
     }

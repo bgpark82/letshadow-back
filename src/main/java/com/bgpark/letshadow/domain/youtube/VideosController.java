@@ -25,29 +25,27 @@ public class VideosController {
 
     @Transactional
     @GetMapping("/videos")
-    public ResponseEntity<String> videos(Principal principal) {
+    public ResponseEntity<VideoDto.Res> videos(Principal principal) {
 
         String token = tokenService.getValidToken(principal.getName());
 
         try {
-            String block = WebClient.create().get()
-                    .uri("https://www.googleapis.com/youtube/v3/videos?part=snippet,player,contentDetails,status,topicDetails,id&myRating=like&access_token=" + token)
+            VideoDto.Res block = WebClient.create().get()
+                    .uri("https://www.googleapis.com/youtube/v3/videos?part=snippet,player,contentDetails,status,topicDetails,id&myRating=like&access_token=" + token + "&maxResults=30")
                     .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                     .retrieve()
-                    .onStatus(HttpStatus::is4xxClientError, clientResponse -> {
-                        Mono<String> error = clientResponse.bodyToMono(String.class);
-                        log.error("client authorization error : {}", error);
-                        return error.flatMap(message -> {
-                            throw new ApiException(ErrorCode.GOOGLE_TOKEN_EXPIRED);
-                        });
-                    })
-                    .bodyToMono(String.class)
+//                    .onStatus(HttpStatus::is4xxClientError, clientResponse -> {
+//                        // TODO: 403인 경우 구글에서 에러 (google oauth error : 403 Forbidden from GET)
+//                        Mono<String> error = clientResponse.bodyToMono(String.class);
+//                        log.error("client authorization error : {}", error);
+//                        return error.flatMap(message -> {
+//                            throw new ApiException(ErrorCode.GOOGLE_TOKEN_EXPIRED);
+//                        });
+//                    })
+                    .bodyToMono(VideoDto.Res.class)
                     .block();
-
-
             return ResponseEntity.ok(block);
         } catch (RuntimeException e) {
-
             log.error("google oauth error : {}", e.getMessage());
             throw new ApiException(ErrorCode.GOOGLE_TOKEN_EXPIRED);
         }

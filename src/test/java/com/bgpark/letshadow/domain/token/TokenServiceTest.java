@@ -1,5 +1,6 @@
 package com.bgpark.letshadow.domain.token;
 
+import com.bgpark.letshadow.api.GoogleTokenApi;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +22,13 @@ class TokenServiceTest {
 
     @Mock
     private GoogleTokenRepository googleTokenRepository;
+    @Mock
+    private GoogleTokenApi googleTokenApi;
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        tokenService = new TokenService(googleTokenRepository);
+        tokenService = new TokenService(googleTokenRepository, googleTokenApi);
     }
 
     @Test
