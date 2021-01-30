@@ -1,6 +1,7 @@
 package com.bgpark.letshadow.domain.token;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class TokenDto {
 
@@ -47,6 +48,13 @@ public class TokenDto {
         private String scope;
         private String token_type;
         private String refresh_token;
+    }
+
+    @Data
+    public static class User {
+        private String name;
+        private String picture;
+        private String email;
     }
 }
 

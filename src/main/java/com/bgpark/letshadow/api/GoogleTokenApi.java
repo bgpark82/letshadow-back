@@ -17,6 +17,7 @@ public class GoogleTokenApi {
     private String serverRedirectUri;
 
     private static final String GOOGLE_CALLBACK_URI = "https://oauth2.googleapis.com";
+    private static final String GOOGLE_TOKEN_USER_URI = "https://www.googleapis.com/oauth2/v3/userinfo";
     private static final String GOOGLE_TOKEN_INFO_URI = "https://www.googleapis.com/oauth2/v1/tokeninfo";
 
     private static final String CLIENT_ID = "758204078687-dhoc57phmqfj5epv6vvi327kguumm9p8.apps.googleusercontent.com";
@@ -76,6 +77,20 @@ public class GoogleTokenApi {
                         .build())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(TokenDto.Refresh.class))
+                .block();
+    }
+
+    public TokenDto.User getUserInfo(String accessToken) {
+        return WebClient.builder()
+                .baseUrl(GOOGLE_TOKEN_USER_URI)
+                .clientConnector(new ReactorClientHttpConnector(
+                        HttpClient.create().wiretap(true)
+                )).build()
+                .post().uri(uriBuilder -> uriBuilder
+                        .queryParam("access_token", accessToken)
+                        .build())
+                .retrieve()
+                .bodyToMono(TokenDto.User.class)
                 .block();
     }
 }

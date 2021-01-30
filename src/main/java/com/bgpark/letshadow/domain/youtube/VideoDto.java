@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class VideoDto {
 
-
     @JsonDeserialize(using = VideoDeserializer.class)
     @Getter
     @Builder

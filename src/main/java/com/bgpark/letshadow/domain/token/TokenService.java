@@ -53,4 +53,11 @@ public class TokenService {
         }
     }
 
+    public TokenDto.User getUserInfo(String email) {
+        GoogleToken googleToken = googleTokenRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiException(ErrorCode.GOOGLE_TOKEN_NOT_FOUND));
+        String token = googleToken.getAccess_token();
+        return googleTokenApi.getUserInfo(token);
+    }
+
 }
