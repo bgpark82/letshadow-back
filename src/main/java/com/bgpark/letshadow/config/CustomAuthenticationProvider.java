@@ -30,7 +30,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             String email = authentication.getName();
             String password = authentication.getCredentials().toString();
-            User user = userRepository.findByEmail(email);
+
+            if(!userRepository.findByEmail(email).isPresent()) {
+                userRepository.save(new User(email));
+            }
+
+            User user = userRepository.findByEmail(email).get();
 
             try {
                 restTemplate.postForEntity(GOOGLE_PROVIDER_ENDPOINT + password, null, TokenDto.Check.class);

@@ -2,6 +2,8 @@ package com.bgpark.letshadow.domain.token;
 
 import com.bgpark.letshadow.api.GoogleTokenApi;
 import com.bgpark.letshadow.api.ServerTokenApi;
+import com.bgpark.letshadow.domain.user.User;
+import com.bgpark.letshadow.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
