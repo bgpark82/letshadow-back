@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration conf = new CorsConfiguration();
-        conf.setAllowedOrigins(Arrays.asList("https://letshadow.net","http://localhost:5500"));
+        conf.setAllowedOrigins(Arrays.asList("https://www.letshadow.net","http://localhost:5500"));
         conf.setAllowedMethods(Arrays.asList("*"));
         conf.setAllowedHeaders(Arrays.asList("*"));
         conf.setAllowCredentials(true);
